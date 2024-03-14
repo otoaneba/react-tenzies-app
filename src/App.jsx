@@ -7,7 +7,6 @@ import Confetti from 'react-confetti';
 function App() {
   const [newDice, setNewDice] = React.useState(allNewDice());
   const [tenzies, setTenzies] = React.useState(false);
-  const [buttonText, setButtonText] = React.useState("Roll")
   
   function allNewDice() {
     const arr = [];
@@ -49,11 +48,7 @@ function App() {
 
   function newGame() {
     setTenzies(false);
-    shuffle();
-    setNewDice(oldDice => oldDice.map(die => (
-        makeNewDice()
-      )
-    ))
+    allNewDice();
   }
 
   React.useEffect(() => {
@@ -62,7 +57,6 @@ function App() {
     const allEqual = newDice.every(die => die.value === firstValue)
     if (allHeld && allEqual) {
       console.log('you won!')
-      setButtonText("New Game")
       setTenzies(true);
     }
   }, [newDice])
@@ -76,7 +70,7 @@ function App() {
       <section className="dice--container">
         {diceElements}
       </section>
-      <button onClick={tenzies ? newGame : shuffle}>{buttonText}</button>
+      <button onClick={tenzies ? newGame : shuffle}>{tenzies ? "New Game" : "Roll"}</button>
     </main>
   )
 }
